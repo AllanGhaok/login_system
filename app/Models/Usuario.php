@@ -38,7 +38,7 @@ class Usuario {
 		if($this->db->resultado()):
 			$resultado = $this->db->resultado();
 			if(password_verify($senha, $resultado->senha)):
-				return true;
+				return $resultado;
 			else:
 				return false;
 			endif;

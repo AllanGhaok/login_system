@@ -96,14 +96,13 @@ class Usuarios extends Controller {
 					$usuario = $this->usuarioModel->checarLogin($formulario['email'], $formulario['senha']);
 
 					if($usuario):
-						var_dump($usuario);
-						echo '<hr>';
+						$this->criarSessaoUsuario($usuario);
 					else:
 						echo 'Usuario ou senha invalidos.<hr>';
 					endif;
 				endif;
 			endif;
-			var_dump($formulario);
+			
 		else:
 			$dados = [
 				'email' => '',
@@ -114,5 +113,21 @@ class Usuarios extends Controller {
 		endif;
 		
 		$this->view('usuarios/login', $dados);
+	}
+
+	private function criarSessaoUsuario($usuario){
+		$_SESSION['usuario_id'] = $usuario->id;
+		$_SESSION['usuario_nome'] = $usuario->nome;
+		$_SESSION['usuario_email'] = $usuario->email;
+	}
+
+	public function sair(){
+		unset($_SESSION['usuario_id']);
+		unset($_SESSION['usuario_nome']);
+		unset($_SESSION['usuario_email']);
+
+		session_destroy();
+
+		header('Location: '.URL.'');
 	}
 }

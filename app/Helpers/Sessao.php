@@ -1,5 +1,4 @@
 <?php
-
 class Sessao {
 	public static function mensagem($nome, $texto = null, $classe = null){
 

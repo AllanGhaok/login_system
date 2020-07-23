@@ -20,4 +20,12 @@ class Sessao {
 			endif;
 		endif;
 	}
+
+	public static function estaLogado(){
+		if(isset($_SESSION['usuario_id'])):
+			return true;
+		else:
+			return false;
+		endif;
+	}
 }

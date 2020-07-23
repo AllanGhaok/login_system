@@ -8,8 +8,8 @@
 	</nav>
 
 	<div class="card">
-		<div class="card-header bg-secondary text-white">
-			Cadastrar post
+		<div class="card-header bg-light">
+			Escrever Post
 		</div>
 		<div class="card-body">
 			<form name="login" method="POST" action="<?=URL?>/posts/cadastrar">
@@ -22,7 +22,7 @@
 				</div>
 				<div class="form-group">
 					<label for="texto">Texto: <sup class="text-danger">*</sup></label>
-					<textarea name="texto" id="texto" class="form-control <?=$dados['texto_erro'] ? 'is-invalid' : ''?>"><?=$dados['texto']?></textarea>
+					<textarea name="texto" id="texto" class="form-control <?=$dados['texto_erro'] ? 'is-invalid' : ''?>" rows="5"><?=$dados['texto']?></textarea>
 					<div class="invalid-feedback">
 						<?=$dados['texto_erro']?>
 					</div>

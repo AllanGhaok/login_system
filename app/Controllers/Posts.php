@@ -5,6 +5,8 @@ class Posts extends Controller {
 		if(!Sessao::estaLogado()):
 			URL::redirecionar('usuarios/login');
 		endif;
+
+		$this->postModel = $this->model('Post');
 	}
 
 	public function index(){
@@ -17,7 +19,8 @@ class Posts extends Controller {
 		if(isset($formulario)):
 			$dados = [
 				'titulo' => trim($formulario['titulo']),
-				'texto' => trim($formulario['texto'])
+				'texto' => trim($formulario['texto']),
+				'usuario_id' => $_SESSION['usuario_id']
 			];
 
 			if(in_array("", $formulario)):
@@ -29,7 +32,12 @@ class Posts extends Controller {
 					$dados['texto_erro'] = 'Preencha o campo Texto.';
 				endif;
 			else:
-				echo 'Pode cadastrar o post.';
+				if($this->postModel->armazenar($dados)):
+						Sessao::mensagem('post', 'Post cadastrado com sucesso.');
+						URL::redirecionar('posts');
+					else:
+						die("Erro ao realizar post no banco de dados.");
+					endif;
 			endif;
 		
 		else:

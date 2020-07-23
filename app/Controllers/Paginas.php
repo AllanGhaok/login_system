@@ -3,6 +3,10 @@
 class Paginas extends Controller{
 
 	public function index(){
+		if(Sessao::estaLogado()):
+			URL::redirecionar('posts');
+		endif;
+
 		$dados = [
 			'titulo'=> 'Página Inicial',
 		];

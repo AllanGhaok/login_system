@@ -30,3 +30,7 @@
         </nav>
     </div>
 </header>
+
+<?php
+var_dump($_SESSION);
+?>

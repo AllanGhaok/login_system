@@ -47,15 +47,14 @@ class Usuarios extends Controller {
 					$dados['senha'] = password_hash($formulario['senha'], PASSWORD_DEFAULT);
 
 					if($this->usuarioModel->armazenar($dados)):
-						echo 'Cadastro realizado com sucesso.<hr>';
+						Sessao::mensagem('usuario', 'Cadastro realizado com sucesso.');
+						header('Location: '.URL.'');
 					else:
 						die("Erro ao realizar cadastro ao banco de dados.");
 					endif;
 				endif;
 			endif;
-
-			var_dump($formulario);
-
+		
 		else:
 			$dados = [
 				'nome' => '',
@@ -98,11 +97,11 @@ class Usuarios extends Controller {
 					if($usuario):
 						$this->criarSessaoUsuario($usuario);
 					else:
-						echo 'Usuario ou senha invalidos.<hr>';
+						Sessao::mensagem('usuario', 'Usuario ou senha invalidos','alert alert-danger');
 					endif;
 				endif;
 			endif;
-			
+
 		else:
 			$dados = [
 				'email' => '',
@@ -119,6 +118,7 @@ class Usuarios extends Controller {
 		$_SESSION['usuario_id'] = $usuario->id;
 		$_SESSION['usuario_nome'] = $usuario->nome;
 		$_SESSION['usuario_email'] = $usuario->email;
+		header('Location: '.URL.'');
 	}
 
 	public function sair(){

@@ -1,25 +1,8 @@
 <?php
 	session_start();
+
 	include "./../app/configuracao.php";
 	include "./../app/autoload.php";
-	
-	$db = new  Database;
-
-/*
-	$usuarioId  = 10;
-	$titulo = 'Titulo do post';
-	$texto = 'Texto do post';
-
-	$db->query("INSERT INTO tb_posts (usuario_id, titulo, texto) VALUES (:usuario_id, :titulo, :texto)");
-	$db->bind(":usuario_id", $usuarioId);
-	$db->bind(":titulo", $titulo);
-	$db->bind(":texto", $texto);
-
-	$db->executa();
-
-	echo '<hr>Total Resultados: '.$db->totalResultados();
-	echo '<br>Ultimo Id: '.$db->ultimoIdInserido();
-*/
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

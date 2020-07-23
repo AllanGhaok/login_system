@@ -4,6 +4,7 @@
 			<h4>Entrar</h4>
 		</div>
 		<div class="card-body">
+			<?= Sessao::mensagem('usuario')?>
 			<p class="card-text"><small class="text-muted">Entre com o seu Login e Senha</small></p>
 			<form name="login" method="POST" action="<?=URL?>/usuarios/login">
 				<div class="form-group">
@@ -23,7 +24,7 @@
 				
 				<div class="row">
 					<div class="col">
-						<input type="submit" value="Fazer Login" class="btn btn-info btn-block">
+						<a href="<?=URL?>/Views/paginas/sobre"><input type="submit" value="Fazer Login" class="btn btn-info btn-block"></a>
 					</div>
 					<div class="col">
 						<a href="<?=URL?>/usuarios/cadastrar">Você não tem uma conta? Cadastre-se já!</a>

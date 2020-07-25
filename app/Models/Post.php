@@ -1,9 +1,22 @@
 <?php 
+//Responsavel em conectar com o banco de dados e fazer comandos especificos para ele, para manipulação das postagens.
 class Post {
 	private $db;
 
 	public function __construct(){
 		$this->db = new Database();
+	}
+
+	public function lerPosts(){
+		$this->db->query("SELECT *, 
+		tb_posts.id as postID, 
+		tb_posts.criado_em as postDataCadastro, 
+		tb_usuarios.id as usuarioId, 
+		tb_usuarios.criado_em as usuarioDataCadastro 
+		FROM tb_posts 
+		INNER JOIN tb_usuarios ON 
+		tb_posts.usuario_id = tb_usuarios.id");
+		return $this->db->resultados();
 	}
 
 	public function armazenar($dados){

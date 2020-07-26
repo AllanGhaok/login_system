@@ -34,6 +34,20 @@ class Post {
 		endif;
 	}
 
+	public function atualizar($dados){
+		$this->db->query("UPDATE tb_posts SET titulo = :titulo, texto = :texto WHERE id = :id");
+
+		$this->db->bind("id", $dados['id']);
+		$this->db->bind("titulo", $dados['titulo']);
+		$this->db->bind("texto", $dados['texto']);
+
+		if($this->db->executa()):
+			return true;
+		else:
+			return false;
+		endif;
+	}
+
 	public function lerPostPorId($id){
 		$this->db->query("SELECT * FROM tb_posts WHERE id = :id");
 		$this->db->bind('id', $id);

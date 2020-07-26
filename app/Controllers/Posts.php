@@ -58,6 +58,47 @@ class Posts extends Controller {
 		$this->view('posts/cadastrar', $dados);
 	}
 
+	public function editar($id){
+		$formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		if(isset($formulario)):
+			$dados = [
+				'id' => $id, //antes era: trim($formulario[$id])
+				'titulo' => trim($formulario['titulo']),
+				'texto' => trim($formulario['texto'])
+			];
+
+			if(in_array("", $formulario)):
+				if(empty($formulario['titulo'])):
+					$dados['titulo_erro'] = 'Preencha o campo Titulo.';
+				endif;
+
+				if(empty($formulario['texto'])):
+					$dados['texto_erro'] = 'Preencha o campo Texto.';
+				endif;
+			else:
+				if($this->postModel->atualizar($dados)):
+						Sessao::mensagem('post', 'Post atuzlizado com sucesso.');
+						URL::redirecionar('posts');
+					else:
+						die("Erro ao atualizar o post.");
+					endif;
+			endif;
+		
+		else:
+			$post = $this->postModel->lerPostPorId($id);
+			
+			$dados = [
+				'id' => $post->id,
+				'titulo' => $post->titulo,
+				'texto' => $post->texto,
+				'titulo_erro' => '',
+				'texto_erro' => '',
+			];
+		endif;
+		
+		$this->view('posts/editar', $dados);
+	}
+
 	public function ver($id){
 		$post = $this->postModel->lerPostPorId($id);
 		$usuario = $this->usuarioModel->lerUsuarioPorId($post->usuario_id);

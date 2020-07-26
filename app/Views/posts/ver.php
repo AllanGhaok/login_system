@@ -17,5 +17,9 @@
 		<div class="card-footer text-muted">
 			Escrito por: <?=$dados['usuario']->nome?> em <?=Checa::dataBr($dados['post']->criado_em)?>
 		</div>
+
+		<?php if($dados['post']->usuario_id == $_SESSION['usuario_id']) : ?>
+			<a href="<?= URL.'/posts/editar/'.$dados['post']->id ?>" class="btn btn-sm btn-primary"><h6>Editar</h6></a>
+		<?php endif ?>
 	</div>	
 </div>

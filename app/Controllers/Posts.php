@@ -8,6 +8,7 @@ class Posts extends Controller {
 		endif;
 
 		$this->postModel = $this->model('Post');
+		$this->usuarioModel = $this->model('Usuario');
 	}
 
 	public function index(){
@@ -55,5 +56,17 @@ class Posts extends Controller {
 		endif;
 		var_dump($formulario);
 		$this->view('posts/cadastrar', $dados);
+	}
+
+	public function ver($id){
+		$post = $this->postModel->lerPostPorId($id);
+		$usuario = $this->usuarioModel->lerUsuarioPorId($post->usuario_id);
+
+		$dados = [
+			'post' => $post,
+			'usuario' => $usuario
+		];
+
+		$this->view('posts/ver', $dados);
 	}
 }

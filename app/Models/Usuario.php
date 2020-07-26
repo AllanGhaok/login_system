@@ -46,4 +46,12 @@ class Usuario {
 			return false;
 		endif;
 	}
+
+	public function lerUsuarioPorId($id){
+		$this->db->query("SELECT * FROM tb_usuarios WHERE id = :id");
+		$this->db->bind('id', $id);
+
+		return $this->db->resultado();
+	}
+
 }

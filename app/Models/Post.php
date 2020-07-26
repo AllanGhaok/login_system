@@ -9,13 +9,14 @@ class Post {
 
 	public function lerPosts(){
 		$this->db->query("SELECT *, 
-		tb_posts.id as postID, 
+		tb_posts.id as postId, 
 		tb_posts.criado_em as postDataCadastro, 
 		tb_usuarios.id as usuarioId, 
 		tb_usuarios.criado_em as usuarioDataCadastro 
 		FROM tb_posts 
 		INNER JOIN tb_usuarios ON 
-		tb_posts.usuario_id = tb_usuarios.id");
+		tb_posts.usuario_id = tb_usuarios.id
+		ORDER BY tb_posts.id DESC");
 		return $this->db->resultados();
 	}
 
@@ -31,5 +32,12 @@ class Post {
 		else:
 			return false;
 		endif;
+	}
+
+	public function lerPostPorId($id){
+		$this->db->query("SELECT * FROM tb_posts WHERE id = :id");
+		$this->db->bind('id', $id);
+
+		return $this->db->resultado();
 	}
 }

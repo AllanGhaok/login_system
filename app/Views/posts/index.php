@@ -15,8 +15,8 @@
 						<p><?= $post->titulo ?></p>
 					</div>
 					<div class="card-body">
-						<p class="card-text"><p><?= $post->texto ?></p>
-						<a href="#" class="btn btn-primary float-right">Ler mais</a>	
+						<p class="card-text"><?= $post->texto ?></p>
+						<a href="<?= URL.'/posts/ver/'.$post->postId ?>" class="btn btn-primary float-right">Ler mais</a>	
 					</div>
 					<div class="card-footer text-muted">
 						Escrito por: <?= $post->nome ?> em <?= date('d/m/Y H:i', strtotime($post->postDataCadastro)) ?>

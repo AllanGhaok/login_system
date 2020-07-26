@@ -54,4 +54,15 @@ class Post {
 
 		return $this->db->resultado();
 	}
+
+	public function destruir($id){
+		$this->db->query("DELETE FROM tb_posts WHERE id = :id");
+		$this->db->bind("id", $id);
+
+		if($this->db->executa()):
+			return true;
+		else:
+			return false;
+		endif;
+	}
 }

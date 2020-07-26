@@ -54,7 +54,7 @@ class Posts extends Controller {
 				'texto_erro' => '',
 			];
 		endif;
-		var_dump($formulario);
+		
 		$this->view('posts/cadastrar', $dados);
 	}
 
@@ -87,6 +87,11 @@ class Posts extends Controller {
 		else:
 			$post = $this->postModel->lerPostPorId($id);
 			
+			if ($post->usuario_id != $_SESSION['usuario_id']):
+				Sessao::mensagem('post', 'Você não tem autorização para fazer alterações neste post.', 'alert alert-danger');
+				URL::redirecionar('posts');
+			endif;
+
 			$dados = [
 				'id' => $post->id,
 				'titulo' => $post->titulo,
@@ -109,5 +114,18 @@ class Posts extends Controller {
 		];
 
 		$this->view('posts/ver', $dados);
+	}
+
+	public function deletar($id){
+		$id = (int) $id;
+
+		if(is_int($id)):
+			if($this->postModel->destruir($id)):
+				Sessao::mensagem('post', 'Post deletado com sucesso.');
+				URL::redirecionar('posts');
+			else:
+				die("Erro ao tentar apagar o post.");
+			endif;
+		endif;
 	}
 }

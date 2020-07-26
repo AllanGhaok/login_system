@@ -117,15 +117,32 @@ class Posts extends Controller {
 	}
 
 	public function deletar($id){
-		$id = (int) $id;
+		if(!$this->checarAutorização($id)):
 
-		if(is_int($id)):
-			if($this->postModel->destruir($id)):
-				Sessao::mensagem('post', 'Post deletado com sucesso.');
-				URL::redirecionar('posts');
+			$id = filter_var($id, FILTER_VALIDATE_INT);
+			$metodo = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_STRING);
+				
+			if($id && $metodo == 'POST'):
+				if($this->postModel->destruir($id)):
+					Sessao::mensagem('post', 'Post deletado com sucesso!');
+					URL::redirecionar('posts');
+				endif;
 			else:
-				die("Erro ao tentar apagar o post.");
+				Sessao::mensagem('post', 'Você não tem autorização para deletar esse Post.', 'alert alert-danger');
+				URL::redirecionar('posts');
 			endif;
+		else:
+			Sessao::mensagem('post', 'Você não tem autorização para deletar esse Post.', 'alert alert-danger');
+			URL::redirecionar('posts');
+		endif;
+	}
+
+	private function checarAutorização($id){
+		$post = $this->postModel->lerPostPorId($id);
+		if($post->usuario_id != $_SESSION['usuario_id']):
+			return true;
+		else:
+			return false;
 		endif;
 	}
 }
